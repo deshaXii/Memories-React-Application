@@ -3,6 +3,9 @@ import { Button, TextField, Typography, Paper } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import useStyles from "./style";
 
+import { useDispatch } from "react-redux";
+import { createPost } from "../../store/posts/actions/index";
+
 const Form = () => {
   const classes = useStyles();
   const [postData, setPostData] = useState({
@@ -13,11 +16,14 @@ const Form = () => {
     creator: "",
   });
 
-  const clear = () => {
+  const dispatch = useDispatch();
 
-  }
+  const clear = () => {};
 
-  const handelSubmit = () => {};
+  const handelSubmit = (e) => {
+    e.preventDefault;
+    dispatch(createPost(postData));
+  };
   return (
     <Paper className={classes.paper}>
       <form
