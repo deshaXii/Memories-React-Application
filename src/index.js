@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { providor, store } from "./store";
+import Providor, { store } from "./store";
 
 import App from "./App";
 
 ReactDOM.render(
-  <providor store={store}>
+  <Providor store={store}>
     <App />
-  </providor>,
+  </Providor>,
   document.getElementById("root")
 );

@@ -1,20 +1,14 @@
-import postsType from '../types/index'
+import postsType from "../types/index";
 
-const INITAL_STATE = {
+const postsReducer = (state = [], action) => {
+  switch (action.type) {
+    case postsType.FETCH_ALL:
+      return action.payload;
+    default:
+      return {
+        ...state,
+      };
+  }
+};
 
-}
-
-const postsReducer = (state = INITAL_STATE, action) => {
-    switch (action.type) {
-        case postsType.CREATE:
-            return {
-                ...state
-            }
-        default: 
-            return {
-                ...state
-            }
-    }
-}
-
-export default postsReducer
+export default postsReducer;
