@@ -4,7 +4,7 @@ import FileBase from "react-file-base64";
 import useStyles from "./style";
 
 import { useDispatch } from "react-redux";
-import { createPost } from "../../store/posts/actions/index";
+import { createNewPost } from "../../store/posts/actions/index";
 
 const Form = () => {
   const classes = useStyles();
@@ -18,17 +18,25 @@ const Form = () => {
 
   const dispatch = useDispatch();
 
-  const clear = () => {};
+  const clear = () => {
+    setPostData({
+      creator: "",
+      title: "",
+      message: "",
+      tags: "",
+      selectedFile: "",
+    });
+  };
 
   const handelSubmit = (e) => {
-    e.preventDefault;
-    dispatch(createPost(postData));
+    e.preventDefault();
+    dispatch(createNewPost(postData));
   };
   return (
     <Paper className={classes.paper}>
       <form
         className={`${classes.root} ${classes.form}`}
-        onInvalid
+        noValidate
         onSubmit={handelSubmit}
         autoComplete="off"
       >
@@ -73,9 +81,9 @@ const Form = () => {
           <FileBase
             type="file"
             multipe={false}
-            onDone={(base64) =>
-              setPostData({ ...postData, selectedFile: base64 })
-            }
+            onDone={({base64}) => {
+              setPostData({ ...postData, selectedFile: base64 });
+            }}
           />
         </div>
         <Button
