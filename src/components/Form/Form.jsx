@@ -8,6 +8,7 @@ import { createNewPost } from "../../store/posts/actions/index";
 
 const Form = () => {
   const classes = useStyles();
+
   const [postData, setPostData] = useState({
     title: "",
     message: "",
@@ -28,9 +29,26 @@ const Form = () => {
     });
   };
 
+  const isInputHasValue = () => {
+    const { title, message, tags, selectedFile, creator } = postData;
+    if (
+      title.length &&
+      message &&
+      tags.length &&
+      selectedFile.length &&
+      creator.length
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   const handelSubmit = (e) => {
     e.preventDefault();
-    dispatch(createNewPost(postData));
+    if (isInputHasValue()) {
+      dispatch(createNewPost(postData));
+      clear();
+    }
   };
   return (
     <Paper className={classes.paper}>
@@ -81,7 +99,7 @@ const Form = () => {
           <FileBase
             type="file"
             multipe={false}
-            onDone={({base64}) => {
+            onDone={({ base64 }) => {
               setPostData({ ...postData, selectedFile: base64 });
             }}
           />
