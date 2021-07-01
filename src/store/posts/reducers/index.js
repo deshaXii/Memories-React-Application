@@ -5,6 +5,7 @@ const postsReducer = (posts = [], action) => {
     case postsType.FETCH_ALL:
       return action.payload;
     case postsType.UPDATE:
+    case postsType.LIKE:
       return posts.map((post) =>
         post._id === action.payload._id ? action.payload : post
       );
