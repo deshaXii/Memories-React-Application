@@ -1,7 +1,8 @@
 const postsType = {
     FETCH_ALL: 'FETCH_ALL',
     CREATE: 'CREATE',
-    UPDATE: 'UPDATE'
+    UPDATE: 'UPDATE',
+    DELETE: 'DELETE'
 }
 
 export default postsType
