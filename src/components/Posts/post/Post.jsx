@@ -9,7 +9,7 @@ import moment from 'moment';
 // import { likePost, deletePost } from '../../../actions/posts';
 import useStyles from './style';
 
-const Post = ({ post }) => {
+const Post = ({ post, setCurrentId }) => {
 //   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -21,8 +21,9 @@ const Post = ({ post }) => {
         <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
       </div>
       <div className={classes.overlay2}>
-      {/* setCurrentId(post._id) */}
-        <Button style={{ color: 'white' }} size="small" onClick={() => {}}><MoreHorizIcon fontSize="default" /></Button>
+        <Button style={{ color: 'white' }} size="small" onClick={() => {
+          setCurrentId(post._id)
+        }}><MoreHorizIcon fontSize="default" /></Button>
       </div>
       <div className={classes.details}>
         <Typography variant="body2" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>

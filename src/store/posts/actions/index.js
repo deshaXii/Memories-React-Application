@@ -1,20 +1,31 @@
 import * as api from "../../../api/index";
 
+// GET ALL POSTS
 export const getPosts = () => async (dispatch) => {
   try {
-    const data = await api.fetchPosts()
+    const data = await api.fetchPosts();
     dispatch({ type: "FETCH_ALL", payload: data.data });
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
 };
 
-export const createNewPost = (post) => async dispatch => {
+// CREATE A NEW POST
+export const createNewPost = (post) => async (dispatch) => {
   try {
-    const data = await api.createPost(post)
-    console.log(data)
-    dispatch({type: 'CREATE', payload: data.data})
+    const { data } = await api.createPost(post);
+    dispatch({ type: "CREATE", payload: data });
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
-}
+};
+
+// UPDATE A EXISTS POST
+export const updatePost = (id, post) => async (dispatch) => {
+  try {
+    const {data} = await api.updatePost(id, post)
+    dispatch({ type: "UPDATE", payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};

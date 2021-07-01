@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, TextField, Typography, Paper } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import useStyles from "./style";
 
 import { useDispatch } from "react-redux";
-import { createNewPost } from "../../store/posts/actions/index";
+import { createNewPost, updatePost } from "../../store/posts/actions/index";
 
-const Form = () => {
+import { useSelector } from "react-redux";
+
+const Form = ({ setCurrentId, currentId }) => {
+  const post = useSelector((state) =>
+    currentId ? state.posts.find((post) => post._id === currentId) : null
+  );
   const classes = useStyles();
 
   const [postData, setPostData] = useState({
@@ -17,9 +22,16 @@ const Form = () => {
     creator: "",
   });
 
+  useEffect(() => {
+    if (post) {
+      setPostData(post);
+    }
+  }, [post]);
+
   const dispatch = useDispatch();
 
   const clear = () => {
+    setCurrentId(null)
     setPostData({
       creator: "",
       title: "",
@@ -45,9 +57,14 @@ const Form = () => {
 
   const handelSubmit = (e) => {
     e.preventDefault();
+
     if (isInputHasValue()) {
+    if (currentId) {
+      dispatch(updatePost(currentId, postData));
+    } else {
       dispatch(createNewPost(postData));
-      clear();
+    }
+    clear();
     }
   };
   return (
@@ -58,7 +75,7 @@ const Form = () => {
         onSubmit={handelSubmit}
         autoComplete="off"
       >
-        <Typography variant="h6">Creating a Memory</Typography>
+        <Typography variant="h6">{currentId ? 'Updating' : 'Creating'} a Memory</Typography>
         <TextField
           name="title"
           variant="outlined"
@@ -93,7 +110,7 @@ const Form = () => {
           label="Tags"
           fullWidth
           value={postData.tags}
-          onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
+          onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })}
         />
         <div className={classes.fileInput}>
           <FileBase
